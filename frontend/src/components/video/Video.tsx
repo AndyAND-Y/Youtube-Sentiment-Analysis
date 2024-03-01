@@ -9,23 +9,47 @@ export default async function Video(props: VideoProps) {
     const videoId = props.videoId;
 
     const fetchVideoData = async () => {
-        const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-        await sleep(1000);
+        const response = await fetch("http://localhost:8000/api/" + videoId, {
+            next: {
+                revalidate: 3600
+            }
+        })
+            .then((res) => res.json())
+
+        return {
+            title: response['title'] as string,
+            viewCount: response['view_count'] as number,
+            thumbnail: response['thumbnail'] as string,
+            likes: response['likes'] as number,
+            commentCount: response["comment_count"] as number,
+        }
+
     }
 
-    const videoData = await fetchVideoData();
+    const { title, thumbnail, viewCount, likes, commentCount } = await fetchVideoData();
 
     return (
-        <div className="md:w-3/4 w-full flex flex-col items-center gap-8 p-8">
-            <div className="w-4/5 aspect-video">
-                <Image
-                    src={`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg?`}
-                    width={1024}
-                    height={1024}
-                    alt="Youtube Thumbnail"
-                    className="w-full h-full"
-                    priority
-                />
+        <div className="w-full flex justify-center">
+            <div className="flex flex-col gap-4 md:w-3/5 w-full">
+
+                <div className="aspect-video">
+                    <Image
+                        src={thumbnail}
+                        width={1024}
+                        height={1024}
+                        alt="Youtube Thumbnail"
+                        className="w-full h-full"
+                        priority
+                    />
+                </div>
+                <div className="flex justify-start w-full">
+                    <h3 className="text-5xl font-semibold truncate">{title}</h3>
+                </div>
+                <div className="flex justify-between">
+                    <span>Views: {viewCount}</span>
+                    <span>Likes: {likes}</span>
+                    <span>Comments: {commentCount}</span>
+                </div>
             </div>
         </div>
     )

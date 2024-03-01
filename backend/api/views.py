@@ -17,28 +17,28 @@ def get_youtube_video_data(request, video_id):
     video_data = response['items'][0]
 
     comments = []
-    next_page_token = None
-    while len(comments) < 400:
-        comments_response = youtube.commentThreads().list(
-            part='snippet',
-            videoId=video_id,
-            textFormat='plainText',
-            maxResults=100,
-            pageToken=next_page_token
-        ).execute()
+    # next_page_token = None
+    # while len(comments) < 400:
+    #     comments_response = youtube.commentThreads().list(
+    #         part='snippet',
+    #         videoId=video_id,
+    #         textFormat='plainText',
+    #         maxResults=100,
+    #         pageToken=next_page_token
+    #     ).execute()
 
-        for item in comments_response['items']:
-            comment = item['snippet']['topLevelComment']['snippet']
-            comments.append({
-                'author': comment['authorDisplayName'],
-                'text': comment['textDisplay'],
-                'like_count': comment['likeCount'],
-                'published_at': comment['publishedAt']
-            })
+    #     for item in comments_response['items']:
+    #         comment = item['snippet']['topLevelComment']['snippet']
+    #         comments.append({
+    #             'author': comment['authorDisplayName'],
+    #             'text': comment['textDisplay'],
+    #             'like_count': comment['likeCount'],
+    #             'published_at': comment['publishedAt']
+    #         })
 
-        next_page_token = comments_response.get('nextPageToken')
-        if not next_page_token:
-            break
+    #     next_page_token = comments_response.get('nextPageToken')
+    #     if not next_page_token:
+    #         break
 
     data = {
         'title': video_data['snippet']['title'],
