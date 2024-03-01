@@ -1,29 +1,32 @@
-"use client";
+import Image from "next/image";
 
-import { useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+interface VideoProps {
+    videoId: string
+}
 
-export default function Video() {
+export default async function Video(props: VideoProps) {
 
-    const [isLoading, setIsLoading] = useState(false);
-    const videoRef = useRef<HTMLDivElement | null>(null);
-    const videoId = useSearchParams().get('v');
+    const videoId = props.videoId;
 
-    if (isLoading) {
-        return <div>Loading...</div>
+    const fetchVideoData = async () => {
+        const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+        await sleep(1000);
     }
 
+    const videoData = await fetchVideoData();
+
     return (
-        <div ref={videoRef}>
-            <iframe
-                width="100%"
-                height=""
-                src={`https://www.youtube.com/embed/${videoId}`}
-                title="YouTube video player"
-                allowFullScreen
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            >
-            </iframe>
+        <div className="md:w-3/4 w-full flex flex-col items-center gap-8 p-8">
+            <div className="w-4/5 aspect-video">
+                <Image
+                    src={`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg?`}
+                    width={1024}
+                    height={1024}
+                    alt="Youtube Thumbnail"
+                    className="w-full h-full"
+                    priority
+                />
+            </div>
         </div>
     )
 

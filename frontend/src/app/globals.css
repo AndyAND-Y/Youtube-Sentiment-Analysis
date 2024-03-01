@@ -4,5 +4,5 @@
 
 :root,
 body {
-    @apply bg-zinc-950
+    @apply bg-zinc-950 min-h-screen text-white
 }

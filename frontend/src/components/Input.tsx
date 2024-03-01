@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent, useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { extractYouTubeVideoId } from '@/util/extractYtbId';
 
@@ -10,8 +10,7 @@ const SearchInput = () => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const [searchTerm, setSearchTerm] = useState('');
-
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -23,6 +22,8 @@ const SearchInput = () => {
 
     const changeSeachParams = useCallback(
         () => {
+
+            const searchTerm = inputRef.current?.value;
 
             if (!searchTerm) {
                 router.replace(pathname)
@@ -38,32 +39,27 @@ const SearchInput = () => {
 
             router.replace(pathname + '?' + createQueryString('v', value))
 
-        }, [createQueryString, pathname, router, searchTerm]
+        }, [createQueryString, pathname, router]
     )
 
-    useEffect(() => {
-
-        const delayDebounceFn = setTimeout(() => {
-            changeSeachParams();
-        }, 500)
-
-        return () => clearTimeout(delayDebounceFn);
-
-    }, [changeSeachParams, searchTerm])
-
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(e.target.value);
-    };
-
     return (
-        <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleChange}
-            className="px-4 py-2 w-2/3 border-none rounded-md appearance-none outline-none"
-        />
+        <>
+            <div className='relative flex items-center w-full'>
+                <input
+                    type="search"
+                    placeholder="Search..."
+                    ref={inputRef}
+                    className="w-full px-4 py-4 border-none rounded-md appearance-none outline-none text-slate-950"
+                    required
+                />
+                <button
+                    className='absolute bg-slate-950 rounded-2xl p-2 end-2'
+                    onClick={() => changeSeachParams()}
+                >
+                    Check!
+                </button>
+            </div >
+        </>
     );
 };
 
