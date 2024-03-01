@@ -1,0 +1,15 @@
+{
+    "name": "ytb-sentiment-analysis",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "start:frontend": "npm --prefix ./frontend run dev",
+        "start:backend": "python3 ./backend/manage.py runserver",
+        "start": "concurrently --kill-others \"npm run start:frontend\" \"npm run start:backend\" "
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
