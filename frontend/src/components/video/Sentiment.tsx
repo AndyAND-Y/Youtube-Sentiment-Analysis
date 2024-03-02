@@ -7,7 +7,7 @@ export default async function Sentiment({ videoId }: VideoSentimentProps) {
 
     const fetchVideoSentiment = async () => {
 
-        const response = await fetch("http://localhost:8000/api/" + videoId + "/sentiment", {
+        const response = await fetch("https://ytb-sentiment-analysis.onrender.com/api/" + videoId + "/sentiment", {
             next: {
                 revalidate: 3600
             }

@@ -7,7 +7,7 @@ interface VideoGeneralProps {
 export default async function General({ videoId }: VideoGeneralProps) {
 
     const fetchVideoGeneral = async () => {
-        const response = await fetch("http://localhost:8000/api/" + videoId, {
+        const response = await fetch("https://ytb-sentiment-analysis.onrender.com/api/" + videoId, {
             next: {
                 revalidate: 3600
             }
