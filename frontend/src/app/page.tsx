@@ -25,6 +25,6 @@ export default async function Home({
                     </Suspense>
                 )
             }
-        </main>
+        </main >
     );
 }

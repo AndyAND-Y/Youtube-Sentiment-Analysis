@@ -1,3 +1,4 @@
+import getBaseApiLink from "@/util/getBaseApiLink"
 
 interface VideoSentimentProps {
     videoId: string,
@@ -7,7 +8,7 @@ export default async function Sentiment({ videoId }: VideoSentimentProps) {
 
     const fetchVideoSentiment = async () => {
 
-        const response = await fetch("https://ytb-sentiment-analysis.onrender.com/api/" + videoId + "/sentiment", {
+        const response = await fetch(getBaseApiLink() + videoId + "/sentiment", {
             next: {
                 revalidate: 3600
             }
@@ -44,5 +45,14 @@ export default async function Sentiment({ videoId }: VideoSentimentProps) {
 
     }
 
-    return (<></>)
+    return (
+        <div className="w-full flex justify-center">
+            <div className="flex flex-col gap-4 md:w-3/5 w-full p-4 bg-neutral-950 rounded-lg">
+
+                <div className="aspect-video">
+
+                </div>
+            </div>
+        </div>
+    )
 }

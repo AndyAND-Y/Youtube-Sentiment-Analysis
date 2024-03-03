@@ -1,4 +1,7 @@
+import getBaseApiLink from "@/util/getBaseApiLink";
 import Image from "next/image";
+import Link from "next/link";
+import { FaThumbsUp } from "react-icons/fa6";
 
 interface VideoGeneralProps {
     videoId: string
@@ -7,7 +10,7 @@ interface VideoGeneralProps {
 export default async function General({ videoId }: VideoGeneralProps) {
 
     const fetchVideoGeneral = async () => {
-        const response = await fetch("https://ytb-sentiment-analysis.onrender.com/api/" + videoId, {
+        const response = await fetch(getBaseApiLink() + videoId, {
             next: {
                 revalidate: 3600
             }
@@ -28,17 +31,24 @@ export default async function General({ videoId }: VideoGeneralProps) {
 
     return (
         <div className="w-full flex justify-center">
-            <div className="flex flex-col gap-4 md:w-3/5 w-full">
+            <div className="flex flex-col gap-4 md:w-3/5 w-full p-4 bg-neutral-950 rounded-lg">
 
                 <div className="aspect-video">
-                    <Image
-                        src={thumbnail}
-                        width={1024}
-                        height={1024}
-                        alt="Youtube Thumbnail"
-                        className="w-full h-full rounded-lg"
-                        priority
-                    />
+                    <a
+                        href={"https://www.youtube.com/watch?v=" + videoId}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="p-8 py-4 pb-2 flex justify-center items-center"
+                    >
+                        <Image
+                            src={thumbnail}
+                            width={1024}
+                            height={1024}
+                            alt="Youtube Thumbnail"
+                            className="w-full h-full rounded-lg hover:shadow-md hover:shadow-white transition-all duration-300 hover:scale-[1.05]"
+                            priority
+                        />
+                    </a>
                 </div>
                 <div className="flex justify-start w-full">
                     <h3 className="p-2 pl-0 text-4xl font-semibold truncate">{title}</h3>
