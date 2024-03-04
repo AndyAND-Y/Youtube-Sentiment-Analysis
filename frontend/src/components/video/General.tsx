@@ -31,7 +31,7 @@ export default async function General({ videoId }: VideoGeneralProps) {
 
     return (
         <div className="w-full flex justify-center">
-            <div className="flex flex-col gap-4 md:w-3/5 w-full p-4 bg-neutral-950 rounded-lg">
+            <div className="flex flex-col gap-4 md:w-3/5 w-full p-4 bg-neutral-950 rounded-lg shadow-neutral-600 shadow-md hover:shadow-lg hover:shadow-neutral-600 transition-all duration-300">
 
                 <div className="aspect-video">
                     <a
@@ -45,7 +45,7 @@ export default async function General({ videoId }: VideoGeneralProps) {
                             width={1024}
                             height={1024}
                             alt="Youtube Thumbnail"
-                            className="w-full h-full rounded-lg hover:shadow-md hover:shadow-white transition-all duration-300 hover:scale-[1.05]"
+                            className="w-full h-full rounded-lg transition-all duration-300 hover:scale-[1.05]"
                             priority
                         />
                     </a>

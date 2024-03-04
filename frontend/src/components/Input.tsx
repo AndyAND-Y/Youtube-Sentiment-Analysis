@@ -62,7 +62,7 @@ const SearchInput = () => {
                     onKeyDown={handleKeyPress}
                 />
                 <button
-                    className='absolute bg-neutral-900 rounded-2xl p-2 end-2'
+                    className='absolute text-lg bg-neutral-900 rounded-2xl p-2 end-2 hover:scale-110 font-bold transition-all duration-300'
                     onClick={() => changeSeachParams()}
                 >
                     Check!
