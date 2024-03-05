@@ -4,6 +4,9 @@ const nextConfig = {
         remotePatterns: [
             {
                 hostname: 'i.ytimg.com'
+            },
+            {
+                hostname: 'yt3.ggpht.com'
             }
         ]
     }

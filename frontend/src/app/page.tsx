@@ -13,9 +13,9 @@ export default async function Home({
     const videoId = Array.isArray(searchParams['v']) ? searchParams['v'][0] : searchParams['v'];
 
     return (
-        <main className="flex flex-col items-center justify-center">
-            <div className="md:w-3/4 w-full flex flex-col items-center gap-8 p-8">
-                <h1 className="text-2xl text-white font-semibold text-balance"> Check the sentiment of a Youtube video </h1>
+        <main className="flex flex-col items-center justify-center pb-12">
+            <div className="md:w-4/5 w-11/12 flex flex-col items-center gap-8 p-4 pb-6">
+                <h1 className="text-2xl text-white font-semibold text-balance"> Check the sentiment of a Youtube video</h1>
                 <SearchInput />
             </div>
             {

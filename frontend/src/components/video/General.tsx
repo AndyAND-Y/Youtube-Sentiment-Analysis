@@ -31,7 +31,7 @@ export default async function General({ videoId }: VideoGeneralProps) {
 
     return (
         <div className="w-full flex justify-center">
-            <div className="flex flex-col gap-4 md:w-3/5 w-full p-4 bg-neutral-950 rounded-lg shadow-neutral-600 shadow-md hover:shadow-lg hover:shadow-neutral-600 transition-all duration-300">
+            <div className="flex flex-col gap-4 md:w-4/5 lg:w-3/5 w-11/12 p-4 bg-neutral-950 rounded-lg shadow-neutral-600 shadow-md hover:shadow-lg hover:shadow-neutral-600 transition-all duration-300">
 
                 <div className="aspect-video">
                     <a
