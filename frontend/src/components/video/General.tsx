@@ -1,7 +1,5 @@
 import getBaseApiLink from "@/util/getBaseApiLink";
 import Image from "next/image";
-import Link from "next/link";
-import { FaThumbsUp } from "react-icons/fa6";
 
 interface VideoGeneralProps {
     videoId: string

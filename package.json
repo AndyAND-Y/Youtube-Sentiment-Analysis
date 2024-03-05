@@ -5,7 +5,9 @@
     "scripts": {
         "start:frontend": "npm --prefix ./frontend run dev",
         "start:backend": "python3 ./backend/manage.py runserver",
-        "start": "concurrently --kill-others \"npm run start:frontend\" \"npm run start:backend\" "
+        "start:backend:win": "python ./backend/manage.py runserver",
+        "start": "concurrently --kill-others \"npm run start:frontend\" \"npm run start:backend\" ",
+        "start:win": "concurrently --kill-others \"npm run start:frontend\" \"npm run start:backend:win\" "
     },
     "author": "",
     "license": "ISC",

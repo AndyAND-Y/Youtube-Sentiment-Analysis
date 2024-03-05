@@ -6,7 +6,8 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500"] })
 
 export const metadata: Metadata = {
     title: "Youtube Comments Sentiment",
-    description: "",
+    description: "Check how people feel about a youtube video!",
+
 };
 
 export default function RootLayout({
