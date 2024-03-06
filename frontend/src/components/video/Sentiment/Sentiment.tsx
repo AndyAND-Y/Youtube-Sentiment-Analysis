@@ -1,7 +1,5 @@
 import getBaseApiLink from "@/util/getBaseApiLink"
 import Comment from "@/types/Comment"
-import ScoreBar from "../ScoreBar"
-import CommentView from "../../Comment/Comment"
 import ModelPart from "./ModelPart"
 
 interface VideoSentimentProps {
@@ -25,7 +23,9 @@ export default async function Sentiment({ videoId }: VideoSentimentProps) {
                 bestComm: Comment,
                 worstComm: Comment,
                 averageScore: number,
+                name: string,
             } = {
+                name: "vader",
                 averageScore: response.vader.average_score,
                 worstComm: {
                     author: response.vader.worst_comm.author,
@@ -47,37 +47,33 @@ export default async function Sentiment({ videoId }: VideoSentimentProps) {
 
             return {
                 vader,
-                vader2: { ...vader },
+                vader2: { ...vader, name: "vader2" },
             } as {
                 [key: string]: {
+                    name: string,
                     averageScore: number,
                     bestComm: Comment,
                     worstComm: Comment,
                 }
             }
         }
-        catch (error) {
-            console.log("[X] Error:" + error);
+
+        const data = await fetchVideoSentiment();
+
+        if (!data) {
             return null;
         }
+
+        return (
+            <div className="flex-col flex gap-4">
+
+                {Object.keys(data).map((model) => {
+
+                    return (
+                        <ModelPart modelData={data[model]} />
+                    )
+                })}
+
+            </div >
+        )
     }
-
-    const data = await fetchVideoSentiment();
-
-    if (!data) {
-        return null;
-    }
-
-    return (
-        <div className="flex-col flex gap-4">
-
-            {Object.keys(data).map((model) => {
-
-                return (
-                    <ModelPart modelData={data[model]} />
-                )
-            })}
-
-        </div >
-    )
-}

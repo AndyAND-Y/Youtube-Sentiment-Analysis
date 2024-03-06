@@ -13,7 +13,7 @@ export default function CommentView({ comment }: CommentProps) {
 
     return (
         <div
-            className="flex gap-2 w-full md:w-1/2 p-4 flex-col"
+            className="flex gap-2 w-full p-4 flex-col"
         >
             <div className="flex items-center gap-1 border-b p-1 py-2">
                 <Image

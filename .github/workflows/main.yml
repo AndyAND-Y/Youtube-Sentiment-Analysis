@@ -1,0 +1,12 @@
+name: Keep alive cron job
+on:
+  schedule:
+    - cron: '*/5 * * * *' # daily https://crontab.guru/#*/5_*_*_*_*
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call endpoint to keep the api alive.
+        run: |
+          response=$(curl --request GET --url 'https://ytb-sentiment-analysis.onrender.com/api' --location)
+          echo "Response: $response"

@@ -55,7 +55,7 @@ const SearchInput = () => {
             <div className='relative flex items-center w-full'>
                 <input
                     type="search"
-                    placeholder="Search..."
+                    placeholder="Input a youtube video link..."
                     ref={inputRef}
                     className="w-full px-4 py-4 border-none rounded-md appearance-none outline-none text-slate-950"
                     required
