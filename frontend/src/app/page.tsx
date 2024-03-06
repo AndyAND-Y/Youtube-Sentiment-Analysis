@@ -1,5 +1,7 @@
 import SearchInput from "@/components/Input";
 import Video from "@/components/video/Video";
+import SearchParams from "@/types/SearchParams";
+import getVideoId from "@/util/getVideoId";
 import { Suspense } from "react";
 
 export default async function Home({
@@ -7,10 +9,10 @@ export default async function Home({
     searchParams,
 }: {
     params: { slug: string }
-    searchParams: { [key: string]: string | string[] | undefined }
+    searchParams: SearchParams
 }) {
 
-    const videoId = Array.isArray(searchParams['v']) ? searchParams['v'][0] : searchParams['v'];
+    const videoId = getVideoId(searchParams);
 
     return (
         <main className="flex flex-col items-center justify-center pb-12 h-full min-h-screen">

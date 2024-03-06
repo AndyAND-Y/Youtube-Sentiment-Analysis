@@ -7,15 +7,6 @@ export async function GET(request: Request) {
 
     const videoId = Array.isArray(searchParams.get('v')) ? searchParams.get('v')?.[0] : searchParams.get('v');
 
-    const response = await fetch(getBaseApiLink() + videoId + "/sentiment", {
-        next: {
-            revalidate: 3600
-        }
-    })
-        .then((res) => res.json())
-
-    const score = response.vader.average_score.toFixed(2);
-
     if (!videoId) {
         return new ImageResponse(
             <div
@@ -33,6 +24,15 @@ export async function GET(request: Request) {
             </div>
         )
     }
+
+    const response = await fetch(getBaseApiLink() + videoId + "/sentiment", {
+        next: {
+            revalidate: 3600
+        }
+    })
+        .then((res) => res.json())
+
+    const score = response.vader.average_score.toFixed(2);
 
     return new ImageResponse(
         (
