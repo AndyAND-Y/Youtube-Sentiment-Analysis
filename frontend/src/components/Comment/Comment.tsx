@@ -7,9 +7,9 @@ interface CommentProps {
     comment: Comment
 }
 
-export default function CommentView({ comment }: CommentProps) {
+TimeAgo.addDefaultLocale(en);
 
-    TimeAgo.addDefaultLocale(en);
+export default function CommentView({ comment }: CommentProps) {
 
     return (
         <div

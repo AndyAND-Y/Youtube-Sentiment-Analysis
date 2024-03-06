@@ -8,7 +8,7 @@ interface VideoProps {
 export default async function Video({ videoId }: VideoProps) {
 
     return (
-        <div className="w-full flex gap-8 flex-col">
+        <div className="w-full h-full flex gap-8 flex-col">
             <General videoId={videoId} />
             <Sentiment videoId={videoId} />
         </div>

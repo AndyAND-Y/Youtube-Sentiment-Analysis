@@ -1,7 +1,5 @@
 import getBaseApiLink from "@/util/getBaseApiLink";
 import Image from "next/image";
-import Link from "next/link";
-import { FaThumbsUp } from "react-icons/fa6";
 
 interface VideoGeneralProps {
     videoId: string
@@ -9,25 +7,46 @@ interface VideoGeneralProps {
 
 export default async function General({ videoId }: VideoGeneralProps) {
 
-    const fetchVideoGeneral = async () => {
-        const response = await fetch(getBaseApiLink() + videoId, {
-            next: {
-                revalidate: 3600
+    const fetchVideoGeneral = async (): Promise<{
+        title: string;
+        viewCount: number;
+        thumbnail: string;
+        likes: number;
+        commentCount: number;
+    } | null> => {
+        try {
+            const response = await fetch(getBaseApiLink() + videoId, {
+                next: {
+                    revalidate: 3600
+                }
+            })
+                .then((res) => res.json())
+
+            return {
+                title: response['title'] as string,
+                viewCount: response['view_count'] as number,
+                thumbnail: response['thumbnail'] as string,
+                likes: response['likes'] as number,
+                commentCount: response["comment_count"] as number,
             }
-        })
-            .then((res) => res.json())
-
-        return {
-            title: response['title'] as string,
-            viewCount: response['view_count'] as number,
-            thumbnail: response['thumbnail'] as string,
-            likes: response['likes'] as number,
-            commentCount: response["comment_count"] as number,
         }
-
+        catch (error) {
+            console.log("[X] Error:" + error);
+            return null;
+        }
     }
 
-    const { title, thumbnail, viewCount, likes, commentCount } = await fetchVideoGeneral();
+    const data = await fetchVideoGeneral();
+
+    if (!data) {
+        return (
+            <div className="w-full h-full flex justify-center items-center">
+                Ups...{'\n'}Something didn't work as intended.
+            </div>
+        )
+    }
+
+    const { title, thumbnail, viewCount, likes, commentCount } = data;
 
     return (
         <div className="w-full flex justify-center">
