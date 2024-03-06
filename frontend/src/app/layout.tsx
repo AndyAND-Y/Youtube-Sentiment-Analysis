@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Youtube Comments Sentiment",
         description: "Check how people feel about a youtube video!",
-        siteName: "YoutubeCommentsSentimentAnalysis",
+        siteName: "Youtube Comments Sentiment Analysis",
         type: "website",
         images: [{ url: "https://ytb-sentiment-analysis.vercel.app/og/?v=UyKtxsdI0z8" }]
     }
