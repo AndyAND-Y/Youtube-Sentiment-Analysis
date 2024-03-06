@@ -1,5 +1,6 @@
 import getBaseApiLink from "@/util/getBaseApiLink";
 import Image from "next/image";
+import Counter from "../Counter/Counter";
 
 interface VideoGeneralProps {
     videoId: string
@@ -80,9 +81,9 @@ export default async function General({ videoId }: VideoGeneralProps) {
                     <h3 className="p-2 pl-0 text-4xl font-semibold truncate">{title}</h3>
                 </div>
                 <div className="flex justify-between">
-                    <span>Views: {viewCount}</span>
-                    <span>Likes: {likes}</span>
-                    <span>Comments: {commentCount}</span>
+                    <span className="flex gap-1">Views: <Counter from={Number(0)} to={Number(viewCount)} precission={0} /></span>
+                    <span className="flex gap-1">Likes: <Counter from={Number(0)} to={Number(likes)} precission={0} /></span>
+                    <span className="flex gap-1">Comments: <Counter from={Number(0)} to={Number(commentCount)} precission={0} /></span>
                 </div>
             </div>
         </div>

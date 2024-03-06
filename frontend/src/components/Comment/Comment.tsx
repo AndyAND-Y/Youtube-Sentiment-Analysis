@@ -1,7 +1,10 @@
+"use client";
 import Comment from "@/types/Comment"
 import Image from "next/image"
 import TimeAgo from "javascript-time-ago"
 import en from "javascript-time-ago/locale/en";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface CommentProps {
     comment: Comment
@@ -10,6 +13,8 @@ interface CommentProps {
 TimeAgo.addDefaultLocale(en);
 
 export default function CommentView({ comment }: CommentProps) {
+
+    const [showMore, setShowMore] = useState(false);
 
     return (
         <div
@@ -33,11 +38,38 @@ export default function CommentView({ comment }: CommentProps) {
                 <p>{new TimeAgo("en-US").format(Date.parse(comment.publishedAt))}</p>
             </div>
             <div
-                className="py-2 p-1"
+                className="flex flex-col py-2 p-1 gap-2"
             >
-                {comment.text}
+                <motion.div
+
+                    initial={{
+
+                    }}
+
+                    animate={{
+                        height: showMore ? "100%" : "4.5rem"
+                    }}
+                    transition={{
+                        duration: comment.text.length / 1000,
+                        ease: "easeInOut"
+                    }}
+                    className="overflow-clip h-[4.5rem]"
+                >
+                    <p>{comment.text}</p>
+                </motion.div>
+
+                <div className="flex justify-end">
+                    <button
+                        className="p-2 bg-neutral-800 rounded-full"
+                        onClick={() => {
+                            setShowMore((prev) => !prev);
+                        }}
+                    >
+                        {showMore ? "Show Less" : "Show More"}
+                    </button>
+                </div>
             </div>
-        </div>
+        </div >
     )
 
 }
