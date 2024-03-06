@@ -5,6 +5,7 @@ import TimeAgo from "javascript-time-ago"
 import en from "javascript-time-ago/locale/en";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Counter from "../Counter/Counter";
 
 interface CommentProps {
     comment: Comment
@@ -33,9 +34,9 @@ export default function CommentView({ comment }: CommentProps) {
                 </div>
             </div>
             <div className="flex gap-4">
-                <p>Score: {comment.score.toFixed(2)}</p>
-                <p>Likes: {comment.likeCount}</p>
-                <p>{new TimeAgo("en-US").format(Date.parse(comment.publishedAt))}</p>
+                <div className="flex gap-1 items-center">Score: <Counter from={0} to={comment.score} precission={2} /> </div>
+                <div className="flex gap-1 items-center">Likes: <Counter from={0} to={comment.likeCount} precission={0} /> </div>
+                <p className="flex gap-1 items-center">{new TimeAgo("en-US").format(Date.parse(comment.publishedAt))}</p>
             </div>
             <div
                 className="flex flex-col py-2 p-1 gap-2"
