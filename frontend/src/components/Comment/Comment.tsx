@@ -42,10 +42,6 @@ export default function CommentView({ comment }: CommentProps) {
             >
                 <motion.div
 
-                    initial={{
-
-                    }}
-
                     animate={{
                         height: showMore ? "100%" : "4.5rem"
                     }}
@@ -58,16 +54,21 @@ export default function CommentView({ comment }: CommentProps) {
                     <p>{comment.text}</p>
                 </motion.div>
 
-                <div className="flex justify-end">
-                    <button
-                        className="p-2 bg-neutral-800 rounded-full"
-                        onClick={() => {
-                            setShowMore((prev) => !prev);
-                        }}
-                    >
-                        {showMore ? "Show Less" : "Show More"}
-                    </button>
-                </div>
+                {
+                    comment.text.split(" ").length >= 30 && (
+                        <div className="flex justify-end">
+                            <button
+                                className="p-2 bg-neutral-800 rounded-full"
+                                onClick={() => {
+                                    setShowMore((prev) => !prev);
+                                }}
+                            >
+                                {showMore ? "Show Less" : "Show More"}
+                            </button>
+                        </div>
+                    )
+                }
+
             </div>
         </div >
     )

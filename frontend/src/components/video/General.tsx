@@ -65,7 +65,7 @@ export default async function General({ videoId }: VideoGeneralProps) {
                         href={"https://www.youtube.com/watch?v=" + videoId}
                         rel="noopener noreferrer"
                         target="_blank"
-                        className="p-8 py-4 pb-2 flex justify-center items-center"
+                        className="sm:p-8 p-4 py-4 pb-2 flex justify-center items-center"
                     >
                         <Image
                             src={thumbnail}

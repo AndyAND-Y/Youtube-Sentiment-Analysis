@@ -39,7 +39,7 @@ export default async function Home({
     return (
         <main className="flex flex-col items-center justify-center pb-12 h-full min-h-screen">
             <div className="md:w-4/5 w-11/12 flex flex-col items-center gap-8 p-4 pb-6">
-                <h1 className="text-4xl text-white font-semibold text-balance text-center">Youtube Comment Section Sentiment Analysis</h1>
+                <h1 className="sm:text-4xl text-lg text-white font-semibold text-balance text-center">Youtube Comment Section Sentiment Analysis</h1>
                 <SearchInput />
             </div>
             {
