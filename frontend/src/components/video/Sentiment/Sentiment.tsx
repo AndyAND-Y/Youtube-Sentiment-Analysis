@@ -58,22 +58,28 @@ export default async function Sentiment({ videoId }: VideoSentimentProps) {
             }
         }
 
-        const data = await fetchVideoSentiment();
-
-        if (!data) {
+        catch (error) {
+            console.log("[X] Error:" + error)
             return null;
         }
-
-        return (
-            <div className="flex-col flex gap-4">
-
-                {Object.keys(data).map((model) => {
-
-                    return (
-                        <ModelPart modelData={data[model]} />
-                    )
-                })}
-
-            </div >
-        )
     }
+
+    const data = await fetchVideoSentiment();
+
+    if (!data) {
+        return null;
+    }
+
+    return (
+        <div className="flex-col flex gap-4">
+
+            {Object.keys(data).map((model, index) => {
+
+                return (
+                    <ModelPart modelData={data[model]} key={"model_" + index} />
+                )
+            })}
+
+        </div >
+    )
+}

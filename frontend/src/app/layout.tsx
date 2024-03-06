@@ -7,7 +7,12 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500"] })
 export const metadata: Metadata = {
     title: "Youtube Comments Sentiment",
     description: "Check how people feel about a youtube video!",
-
+    openGraph: {
+        title: "Youtube Comments Sentiment",
+        description: "Check how people feel about a youtube video!",
+        siteName: "YoutubeCommentsSentimentAnalysis",
+        type: "website",
+    }
 };
 
 export default function RootLayout({
