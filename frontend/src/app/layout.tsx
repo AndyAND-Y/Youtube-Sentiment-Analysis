@@ -6,24 +6,7 @@ import getVideoId from "@/util/getVideoId";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500"] })
 
-export async function generateMetadata(
-    { searchParams }: { searchParams: SearchParams }
-) {
 
-    const videoId = getVideoId(searchParams);
-
-    return {
-        title: "Youtube Comments Sentiment",
-        description: "Check how people feel about a youtube video!",
-        openGraph: {
-            title: "Youtube Comments Sentiment",
-            description: "Check how people feel about a youtube video!",
-            siteName: "Youtube Comments Sentiment Analysis",
-            type: "website",
-            images: [{ url: "https://ytb-sentiment-analysis.vercel.app/og/?v=" + videoId }]
-        }
-    }
-}
 
 export default function RootLayout({
     children,

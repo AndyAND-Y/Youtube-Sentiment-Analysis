@@ -2,15 +2,37 @@ import SearchInput from "@/components/Input";
 import Video from "@/components/video/Video";
 import SearchParams from "@/types/SearchParams";
 import getVideoId from "@/util/getVideoId";
+import { Metadata } from "next";
 import { Suspense } from "react";
+
+type Props = {
+    params: { id: string }
+    searchParams: SearchParams,
+}
+
+export async function generateMetadata(
+    { params, searchParams }: Props,
+): Promise<Metadata> {
+
+    const videoId = getVideoId(searchParams)
+
+    return {
+        title: "Youtube Comments Sentiment",
+        description: "Check how people feel about a youtube video!",
+        openGraph: {
+            title: "Youtube Comments Sentiment",
+            description: "Check how people feel about a youtube video!",
+            siteName: "Youtube Comments Sentiment Analysis",
+            type: "website",
+            images: [{ url: "https://ytb-sentiment-analysis.vercel.app/og/?v=" + videoId }]
+        }
+    }
+}
 
 export default async function Home({
     params,
     searchParams,
-}: {
-    params: { slug: string }
-    searchParams: SearchParams
-}) {
+}: Props) {
 
     const videoId = getVideoId(searchParams);
 
