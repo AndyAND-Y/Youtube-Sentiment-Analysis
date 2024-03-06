@@ -1,17 +1,6 @@
 import getBaseApiLink from '@/util/getBaseApiLink';
 import { ImageResponse } from 'next/og'
 
-// Image metadata
-export const alt = 'Image'
-export const size = {
-    width: 1280,
-    height: 720,
-}
-
-export const cache = "no-store";
-
-export const contentType = 'image/png'
-
 export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
@@ -83,6 +72,6 @@ export async function GET(request: Request) {
                 </div>
 
             </div >
-        ), { ...size, }
+        ), { height: 720, width: 1280 }
     )
 }
