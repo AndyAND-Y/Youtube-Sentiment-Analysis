@@ -20,7 +20,14 @@ export default async function General({ videoId }: VideoGeneralProps) {
                     revalidate: 3600
                 }
             })
-                .then((res) => res.json())
+                .then((res) => {
+                    if (res.status >= 400) {
+                        return null;
+                    }
+                    return res
+                })
+                .then((res) => res?.json())
+
 
             return {
                 title: response['title'] as string,

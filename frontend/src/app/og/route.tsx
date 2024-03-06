@@ -8,31 +8,36 @@ export async function GET(request: Request) {
     const videoId = Array.isArray(searchParams.get('v')) ? searchParams.get('v')?.[0] : searchParams.get('v');
 
     if (!videoId) {
-        return new ImageResponse(
-            <div
-                style={{
-                    fontSize: 128,
-                    background: 'white',
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                Hi!
-            </div>
-        )
+        return Response.json({ errorMessage: "No video id!" }, { status: 400 });
     }
 
-    const response = await fetch(getBaseApiLink() + videoId + "/sentiment", {
-        next: {
-            revalidate: 3600
-        }
-    })
-        .then((res) => res.json())
+    const getScore = async () => {
+        const response = await fetch(getBaseApiLink() + videoId + "/sentiment", {
+            next: {
+                revalidate: 3600
+            }
+        })
+            .then((res) => {
+                if (res.status >= 400) {
+                    return null;
+                }
+                return res
+            })
+            .then((res) => res?.json())
 
-    const score = response.vader.average_score.toFixed(2);
+        if (!response) {
+            return null;
+        }
+
+        const score = response.vader.average_score.toFixed(2);
+        return score;
+    }
+
+    const score = await getScore();
+
+    if (!score) {
+        return Response.json({ errorMessage: "Invalid id!" }, { status: 400 });
+    }
 
     return new ImageResponse(
         (

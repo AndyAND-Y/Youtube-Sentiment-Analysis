@@ -1,11 +1,7 @@
-import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import SearchParams from "@/types/SearchParams";
-import getVideoId from "@/util/getVideoId";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500"] })
-
 
 
 export default function RootLayout({
