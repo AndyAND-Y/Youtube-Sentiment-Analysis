@@ -2,26 +2,15 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import SearchParams from "@/types/SearchParams";
+import getVideoId from "@/util/getVideoId";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500"] })
-
-export const metadata: Metadata = {
-    title: "Youtube Comments Sentiment",
-    description: "Check how people feel about a youtube video!",
-    openGraph: {
-        title: "Youtube Comments Sentiment",
-        description: "Check how people feel about a youtube video!",
-        siteName: "Youtube Comments Sentiment Analysis",
-        type: "website",
-        images: [{ url: "https://ytb-sentiment-analysis.vercel.app/og/?v=UyKtxsdI0z8" }]
-    }
-};
 
 export async function generateMetadata(
     { searchParams }: { searchParams: SearchParams }
 ) {
 
-    const videoId = searchParams
+    const videoId = getVideoId(searchParams);
 
     return {
         title: "Youtube Comments Sentiment",
@@ -31,7 +20,7 @@ export async function generateMetadata(
             description: "Check how people feel about a youtube video!",
             siteName: "Youtube Comments Sentiment Analysis",
             type: "website",
-            images: [{ url: "https://ytb-sentiment-analysis.vercel.app/og/?v=" }]
+            images: [{ url: "https://ytb-sentiment-analysis.vercel.app/og/?v=" + videoId }]
         }
     }
 }
