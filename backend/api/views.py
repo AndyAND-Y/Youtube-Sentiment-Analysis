@@ -1,9 +1,9 @@
 from django.http import HttpRequest,  JsonResponse
 from googleapiclient.discovery import build
 from dotenv import load_dotenv
-from numpy import average
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import os
+from .models.transformer import get_transformer_response
+from .models.vader import get_vader_response
 
 load_dotenv()
 api_key = os.getenv("youtubeApiKey")
@@ -84,25 +84,9 @@ def get_ytb_comms(request: HttpRequest, video_id):
         if (len(comments) == 0):
             return JsonResponse({"message": "No commets!"})
 
-        analyzer = SentimentIntensityAnalyzer()
-
-        comments = [
-            {
-                **comm,
-                "score": analyzer.polarity_scores(comm['text'])['compound']
-            } for comm in comments
-        ]
-
-        best_comm = max(comments, key=lambda comm: comm['score'])
-        worst_comm = min(comments, key=lambda comm: comm['score'])
-        average_score = average([comm['score'] for comm in comments])
-
         response = {
-            "vader": {
-                "best_comm": best_comm,
-                "worst_comm": worst_comm,
-                "average_score": average_score,
-            },
+            "vader": get_vader_response(comments),
+            "transformers": get_transformer_response(comments),
         }
 
         return JsonResponse(response)
