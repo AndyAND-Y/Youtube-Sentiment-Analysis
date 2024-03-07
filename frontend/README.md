@@ -1,1 +1,2 @@
-- Add popup that explains the metrics
+To dos
+- 
