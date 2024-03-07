@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { extractYouTubeVideoId } from '@/util/extractYtbId';
 
@@ -21,6 +21,8 @@ const SearchInput = () => {
 
     const inputRef = useRef<HTMLInputElement | null>(null);
 
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
     const createQueryString = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams.toString())
@@ -34,17 +36,20 @@ const SearchInput = () => {
             const searchTerm = inputRef.current?.value;
 
             if (!searchTerm) {
-                router.replace(pathname)
+                setErrorMessage("No input! Inset a valid youtube link!");
+                // router.replace(pathname)
                 return
             }
 
             const value = extractYouTubeVideoId(searchTerm);
 
             if (!value) {
-                router.replace(pathname)
+                setErrorMessage("Not a valid youtube video link!")
+                // router.replace(pathname)
                 return
             }
 
+            setErrorMessage(null);
             router.replace(pathname + '?' + createQueryString('v', value))
 
         }, [createQueryString, pathname, router]
@@ -58,15 +63,37 @@ const SearchInput = () => {
         }, []
     );
 
+    useEffect(() => {
+
+        const input = inputRef.current;
+        if (!input) {
+            return
+        }
+
+        let cnt = 0;
+        const interval = setInterval(() => {
+            if (cnt == 4) {
+                cnt = 0;
+            }
+
+            input.placeholder = "Input a youtube video link " + '.'.repeat(cnt);
+            cnt += 1
+
+        }, 500);
+
+        return () => clearInterval(interval);
+
+    }, [])
+
 
     return (
-        <>
+        <div className='w-full flex flex-col'>
             <div className='relative flex items-center w-full'>
                 <input
                     type="search"
-                    placeholder="Input a youtube video link..."
+                    placeholder="Input a youtube video link ..."
                     ref={inputRef}
-                    className="w-full px-4 py-4 border-none rounded-md appearance-none outline-none text-slate-950"
+                    className="w-full px-4 py-4 placeholder:font-bold placeholder:text-gray-950 border-none rounded-md appearance-none outline-none text-slate-950"
                     required
                     onKeyDown={handleKeyPress}
                 />
@@ -77,7 +104,10 @@ const SearchInput = () => {
                     <SearchIcon /> Check!
                 </button>
             </div >
-        </>
+            {errorMessage && (
+                <div className='text-red-500 p-1' >{errorMessage}</div>
+            )}
+        </div>
     );
 };
 

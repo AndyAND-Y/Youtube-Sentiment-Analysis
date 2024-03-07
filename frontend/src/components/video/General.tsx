@@ -18,7 +18,7 @@ export default async function General({ videoId }: VideoGeneralProps) {
         try {
             const response = await fetch(getBaseApiLink() + videoId, {
                 next: {
-                    revalidate: 3600
+                    revalidate: 3600 * 4
                 }
             })
                 .then((res) => {
@@ -29,9 +29,9 @@ export default async function General({ videoId }: VideoGeneralProps) {
                 })
                 .then((res) => res?.json())
 
-            const sleep = (s: number) => new Promise((resolve) => setTimeout(resolve, s * 1000))
+            // const sleep = (s: number) => new Promise((resolve) => setTimeout(resolve, s * 1000))
 
-            await sleep(5);
+            // await sleep(5);
 
             return {
                 title: response['title'] as string,
@@ -47,12 +47,20 @@ export default async function General({ videoId }: VideoGeneralProps) {
         }
     }
 
+    if (videoId.length !== 11) {
+        return (
+            <div className="w-full h-full flex justify-center items-center">
+                Not a valid video id!
+            </div>
+        )
+    }
+
     const data = await fetchVideoGeneral();
 
     if (!data) {
         return (
             <div className="w-full h-full flex justify-center items-center">
-                Ups...{'\n'}Something didn't work as intended.
+                Ups... Something didn't work as intended!
             </div>
         )
     }
