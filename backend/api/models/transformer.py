@@ -1,8 +1,11 @@
 from numpy import average
 from transformers import pipeline
+import tracemalloc
 
 
 def get_transformer_response(comments: list):
+
+    tracemalloc.start()
 
     classification = pipeline("sentiment-analysis")  # type: ignore
 
@@ -31,5 +34,7 @@ def get_transformer_response(comments: list):
         "best_comm": best_comm,
         "worst_comm": worst_comm
     }
+    print(tracemalloc.get_traced_memory()[1]/1_000_000)
+    tracemalloc.stop()
 
     return response
