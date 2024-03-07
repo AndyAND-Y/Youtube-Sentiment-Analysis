@@ -6,3 +6,11 @@
 body {
     @apply bg-neutral-900 min-h-screen text-white
 }
+
+.tooltip {
+    @apply invisible absolute opacity-0 duration-300 transition-all
+}
+
+.has-tooltip:hover .tooltip {
+    @apply visible z-50 opacity-100
+}

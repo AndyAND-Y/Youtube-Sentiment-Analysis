@@ -1,6 +1,7 @@
 import getBaseApiLink from "@/util/getBaseApiLink"
 import Comment from "@/types/Comment"
 import ModelPart from "./ModelPart"
+import ModelData from "@/types/ModelData"
 
 interface VideoSentimentProps {
     videoId: string,
@@ -19,13 +20,21 @@ export default async function Sentiment({ videoId }: VideoSentimentProps) {
             })
                 .then((res) => res.json())
 
-            const vader: {
-                bestComm: Comment,
-                worstComm: Comment,
-                averageScore: number,
-                name: string,
-            } = {
-                name: "vader",
+            const generalDesc = [
+                "Sentiment analysis is like a mood detector for text, figuring out if it's happy, sad, or neutral. \
+                It helps understand people's feelings expressed in words, like on social media or in product reviews."
+            ]
+
+            const descVader = [
+                "VADER Sentiment Analysis is a powerful tool designed to understand the sentiment expressed in text, particularly on social media platforms.\
+                It utilizes a specialized lexicon and rule - based system to gauge the emotional tone of a piece of text, whether it's positive, negative, or neutral. \
+                This tool is valuable for those seeking to interpret and analyze sentiments in various contexts, even if they are not familiar with sentiment analysis techniques.",
+                "The scoring method used by sentiment analysis assigns values between -1 and 1 to indicate the degree of positivity or negativity in the text."
+            ]
+
+            const vader: ModelData = {
+                name: "VADER",
+                description: generalDesc.concat(descVader),
                 averageScore: response.vader.average_score,
                 worstComm: {
                     author: response.vader.worst_comm.author,
@@ -47,14 +56,9 @@ export default async function Sentiment({ videoId }: VideoSentimentProps) {
 
             return {
                 vader,
-                vader2: { ...vader, name: "vader2" },
+                vader2: { ...vader, name: "VADER2" },
             } as {
-                [key: string]: {
-                    name: string,
-                    averageScore: number,
-                    bestComm: Comment,
-                    worstComm: Comment,
-                }
+                [key: string]: ModelData
             }
         }
 

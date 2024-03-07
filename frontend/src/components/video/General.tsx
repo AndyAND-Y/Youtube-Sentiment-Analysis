@@ -29,10 +29,6 @@ export default async function General({ videoId }: VideoGeneralProps) {
                 })
                 .then((res) => res?.json())
 
-            // const sleep = (s: number) => new Promise((resolve) => setTimeout(resolve, s * 1000))
-
-            // await sleep(5);
-
             return {
                 title: response['title'] as string,
                 viewCount: response['view_count'] as number,
