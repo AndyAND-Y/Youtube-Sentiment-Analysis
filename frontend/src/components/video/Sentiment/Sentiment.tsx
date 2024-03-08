@@ -15,7 +15,7 @@ export default async function Sentiment({ videoId }: VideoSentimentProps) {
 
             const response = await fetch(getBaseApiLink() + videoId + "/sentiment", {
                 next: {
-                    revalidate: 3600
+                    revalidate: 0
                 }
             })
                 .then((res) => res.json())
@@ -54,9 +54,32 @@ export default async function Sentiment({ videoId }: VideoSentimentProps) {
                 }
             }
 
+            const distilbert: ModelData = {
+                name: "distilbert",
+                description: generalDesc.concat(descVader),
+                averageScore: response.distibert.average_score,
+                worstComm: {
+                    author: response.distibert.worst_comm.author,
+                    text: response.distibert.worst_comm.text,
+                    publishedAt: response.distibert.worst_comm.published_at,
+                    profileImageUrl: response.distibert.worst_comm.profile_image_url,
+                    likeCount: response.distibert.worst_comm.like_count,
+                    score: response.distibert.worst_comm.score,
+                },
+                bestComm: {
+                    author: response.distibert.best_comm.author,
+                    text: response.distibert.best_comm.text,
+                    publishedAt: response.distibert.best_comm.published_at,
+                    profileImageUrl: response.distibert.best_comm.profile_image_url,
+                    likeCount: response.distibert.best_comm.like_count,
+                    score: response.distibert.best_comm.score,
+                }
+            }
+
+
             return {
                 vader,
-                vader2: { ...vader, name: "VADER2" },
+                distilbert
             } as {
                 [key: string]: ModelData
             }

@@ -51,7 +51,7 @@ export default async function Home({
             </div>
             {
                 !!videoId && (
-                    <Suspense fallback={<VideoSkeleton />} >
+                    <Suspense>
                         <Video videoId={videoId} />
                     </Suspense>
                 )

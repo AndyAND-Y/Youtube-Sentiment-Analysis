@@ -2,7 +2,9 @@ from django.http import HttpRequest,  JsonResponse
 from googleapiclient.discovery import build
 from dotenv import load_dotenv
 import os
-from .models.transformer import get_transformer_response
+
+from regex import P
+from .models.distibert import get_distibert_response
 from .models.vader import get_vader_response
 
 load_dotenv()
@@ -86,8 +88,10 @@ def get_ytb_comms(request: HttpRequest, video_id):
 
         response = {
             "vader": get_vader_response(comments),
-            "transformers": get_transformer_response(comments),
+            "distibert": get_distibert_response(comments),
         }
+
+        print(response)
 
         return JsonResponse(response)
     except Exception as e:
