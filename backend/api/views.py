@@ -1,14 +1,12 @@
 from django.http import HttpRequest,  JsonResponse
 from googleapiclient.discovery import build
+from .models.models import MODELS
 from dotenv import load_dotenv
-import os
-
-from regex import P
-from .models.distibert import get_distibert_response
-from .models.vader import get_vader_response
+from os import getenv
 
 load_dotenv()
-api_key = os.getenv("youtubeApiKey")
+api_key = getenv("youtubeApiKey")
+MAX_COMMENT_COUNT = 100
 
 
 def get_ytb_video_data(request: HttpRequest, video_id):
@@ -47,10 +45,16 @@ def get_ytb_video_data(request: HttpRequest, video_id):
         return JsonResponse({"error_message": str(e)}, status=500)
 
 
-def get_ytb_comms(request: HttpRequest, video_id):
+def get_ytb_comms(request: HttpRequest, video_id: str, model: str):
 
     if not request.method == "GET":
         return JsonResponse({"message": "Not permited!"}, status=403)
+
+    if (len(video_id) != 11):
+        return JsonResponse({"message": "Video ID invalid!"}, status=400)
+
+    if (model.lower() not in MODELS):
+        return JsonResponse({"message": "Invalid Model!"}, status=400)
 
     try:
         youtube = build('youtube', 'v3', developerKey=api_key)
@@ -58,7 +62,7 @@ def get_ytb_comms(request: HttpRequest, video_id):
         comments = []
         next_page_token = None
 
-        while len(comments) < 400:
+        while len(comments) < MAX_COMMENT_COUNT:
 
             comments_response = youtube.commentThreads().list(
                 part='snippet',
@@ -84,14 +88,9 @@ def get_ytb_comms(request: HttpRequest, video_id):
                 break
 
         if (len(comments) == 0):
-            return JsonResponse({"message": "No commets!"})
+            return JsonResponse({"message": "No comments!"})
 
-        response = {
-            "vader": get_vader_response(comments),
-            "distibert": get_distibert_response(comments),
-        }
-
-        print(response)
+        response = MODELS[model](comments)
 
         return JsonResponse(response)
     except Exception as e:
@@ -110,4 +109,4 @@ def get_models(request: HttpRequest):
     if not request.method == "GET":
         return JsonResponse({"message": "Not permited!"}, status=403)
 
-    return JsonResponse({"models": ["VADER"]})
+    return JsonResponse({"models": list(MODELS.keys())})

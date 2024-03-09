@@ -17,10 +17,10 @@ def get_vader_response(comments: list):
     worst_comm = min(processed_comments, key=lambda comm: comm['score'])
     average_score = average([comm['score'] for comm in processed_comments])
 
-    response = {
+    result = {
         "average_score": average_score,
         "best_comm": best_comm,
         "worst_comm": worst_comm
     }
 
-    return response
+    return result
