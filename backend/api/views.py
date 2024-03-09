@@ -104,3 +104,10 @@ def default_view(request: HttpRequest):
         return JsonResponse({"message": "Not permited!"}, status=403)
 
     return JsonResponse({"message": "No id given!"}, status=400)
+
+
+def get_models(request: HttpRequest):
+    if not request.method == "GET":
+        return JsonResponse({"message": "Not permited!"}, status=403)
+
+    return JsonResponse({"models": ["VADER"]})
