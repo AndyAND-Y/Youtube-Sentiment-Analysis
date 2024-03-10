@@ -1,11 +1,13 @@
 # To-Do List for Feature Implementation
 
-## 1. Add Skeleton for Sentiment Component
+## Deploy to AWS EC2 Instance with 1GB RAM
 
-## 2. Add Description for Each Model
+## Repair Image Generation
 
-## 3. Deploy to AWS EC2 Instance with 1GB RAM
+## Add Skeleton for Sentiment Component
 
-## 4. Add auth middleware for my backend
+## Add Description for Each Model
 
-## 5. Create Own Model
+## Add auth middleware for my backend
+
+## Create Own Model
