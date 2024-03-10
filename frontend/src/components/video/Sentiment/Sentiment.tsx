@@ -22,9 +22,6 @@ export default async function Sentiment({ videoId, model }: VideoSentimentProps)
 
         const sleep = (s: number) => new Promise((resolve) => setTimeout(resolve, s * 1000));
 
-        if (model == "vader")
-            await sleep(100);
-
         return {
             averageScore: response.average_score,
             bestComm: formatCommentObject(response.best_comm),
