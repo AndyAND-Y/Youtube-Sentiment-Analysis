@@ -1,6 +1,4 @@
-
-
-export default function VideoSkeleton() {
+export default function GeneralSkeleton() {
 
     return (
         <div className="w-full h-full flex gap-8 flex-col">

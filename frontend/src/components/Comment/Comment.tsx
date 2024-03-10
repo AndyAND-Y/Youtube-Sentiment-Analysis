@@ -36,7 +36,7 @@ export default function CommentView({ comment }: CommentProps) {
             <div className="flex gap-4">
                 <div className="flex gap-1 items-center">Score: <Counter from={0} to={comment.score} precission={2} /> </div>
                 <div className="flex gap-1 items-center">Likes: <Counter from={0} to={comment.likeCount} precission={0} /> </div>
-                <p className="flex gap-1 items-center">{new TimeAgo("en-US").format(Date.parse(comment.publishedAt))}</p>
+                <p className="flex gap-1 items-center whitespace-nowrap">{new TimeAgo("en-US").format(Date.parse(comment.publishedAt), 'mini')} ago</p>
             </div>
             <div
                 className="flex flex-col py-2 p-1 gap-2"
@@ -56,7 +56,7 @@ export default function CommentView({ comment }: CommentProps) {
                 </motion.div>
 
                 {
-                    comment.text.split(" ").length >= 30 && (
+                    comment.text.split(" ").length >= 35 && (
                         <div className="flex justify-end">
                             <button
                                 className="p-2 bg-neutral-800 rounded-full"

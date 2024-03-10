@@ -1,6 +1,6 @@
 import SearchInput from "@/components/Input";
 import Video from "@/components/video/Video";
-import VideoSkeleton from "@/components/video/VideoSkeleton";
+import VideoSkeleton from "@/components/video/GeneralSkeleton";
 import SearchParams from "@/types/SearchParams";
 import getVideoId from "@/util/getVideoId";
 import { Metadata } from "next";
@@ -51,7 +51,7 @@ export default async function Home({
             </div>
             {
                 !!videoId && (
-                    <Suspense>
+                    <Suspense fallback={<div>Loading Video.</div>}>
                         <Video videoId={videoId} />
                     </Suspense>
                 )
