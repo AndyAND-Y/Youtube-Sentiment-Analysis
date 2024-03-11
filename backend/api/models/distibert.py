@@ -8,7 +8,7 @@ def get_distibert_response(comments: list):
         model="lxyuan/distilbert-base-multilingual-cased-sentiments-student",
     )
 
-    results = classifier((comm['text'] for comm in comments))
+    results = classifier((comm['text'][:500] for comm in comments))
     results = [
         (-1 if result['label'][0] != 'p' else 1) * result['score']
         for result in results
