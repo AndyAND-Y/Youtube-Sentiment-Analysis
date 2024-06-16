@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams, redirect } from 'next/navigation';
 import { extractYouTubeVideoId } from '@/util/extractYtbId';
 
 function SearchIcon() {
@@ -50,7 +50,11 @@ const SearchInput = () => {
             }
 
             setErrorMessage(null);
+            router.replace(pathname)
+            router.refresh();
             router.replace(pathname + '?' + createQueryString('v', value))
+            router.refresh();
+            // redirect(pathname + '?' + createQueryString('v', value))
 
         }, [createQueryString, pathname, router]
     )

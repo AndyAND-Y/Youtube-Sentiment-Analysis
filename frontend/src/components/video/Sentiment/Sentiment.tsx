@@ -14,14 +14,12 @@ export default async function Sentiment({ videoId, model }: VideoSentimentProps)
 
         const response = await fetch(getBaseApiLink() + videoId + "/" + model, {
             next: {
-                revalidate: 3600,
+                revalidate: 10
             }
         })
             .then((res) => res.json())
             .then((data) => data)
-
-        const sleep = (s: number) => new Promise((resolve) => setTimeout(resolve, s * 1000));
-
+        // const sleep = (s: number) => new Promise((resolve) => setTimeout(resolve, s * 1000));
         return {
             averageScore: response.average_score,
             bestComm: formatCommentObject(response.best_comm),

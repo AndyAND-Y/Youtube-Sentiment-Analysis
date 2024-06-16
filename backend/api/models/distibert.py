@@ -1,32 +1,35 @@
-from numpy import average
-from transformers import pipeline
+import json
+import boto3
 
 
 def get_distibert_response(comments: list):
 
-    classifier = pipeline(
-        model="lxyuan/distilbert-base-multilingual-cased-sentiments-student",
-    )
+    lambda_client = boto3.client('lambda', region_name='eu-west-2')
 
-    results = classifier((comm['text'][:500] for comm in comments))
-    results = [
-        (-1 if result['label'][0] != 'p' else 1) * result['score']
-        for result in results
-    ]
+    function_name = 'lambda-ai-test-x86'
+    payload = {"comments": comments[:50]}
 
-    processed_comments = [{
-        "score": result,
-        ** comm
-    } for comm, result in zip(comments, results)]
+    try:
+        response = lambda_client.invoke(
+            FunctionName=function_name,
+            InvocationType='RequestResponse',
+            Payload=json.dumps(payload)
+        )
 
-    best_comm = max(processed_comments, key=lambda comm: comm['score'])
-    worst_comm = min(processed_comments, key=lambda comm: comm['score'])
-    average_score = average([comm['score'] for comm in processed_comments])
+        response_payload = json.loads(response['Payload'].read())
+        response_payload = json.loads(response_payload['body'])
 
-    result = {
-        "average_score": average_score,
-        "best_comm": best_comm,
-        "worst_comm": worst_comm
-    }
+        result = {
+            "average_score": response_payload['average_score'],
+            "best_comm": response_payload['best_comm'],
+            "worst_comm": response_payload['worst_comm'],
+        }
 
-    return result
+        print(result)
+
+        return result
+
+    except Exception as e:
+
+        print(f"Error invoking Lambda function: {e}")
+        return None

@@ -42,6 +42,7 @@ export default async function Home({
 }: Props) {
 
     const videoId = getVideoId(searchParams);
+    console.log("video id", videoId);
 
     return (
         <main className="flex flex-col items-center justify-center pb-12 h-full min-h-screen">
@@ -51,9 +52,7 @@ export default async function Home({
             </div>
             {
                 !!videoId && (
-                    <Suspense fallback={<div>Loading Video.</div>}>
-                        <Video videoId={videoId} />
-                    </Suspense>
+                    <Video videoId={videoId} />
                 )
             }
         </main >

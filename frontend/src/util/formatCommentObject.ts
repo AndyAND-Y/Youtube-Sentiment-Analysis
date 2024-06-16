@@ -10,6 +10,7 @@ type RawComment = {
 }
 
 export default function formatCommentObject(comment: RawComment): Comment {
+
     return {
         author: comment.author,
         profileImageUrl: comment.profile_image_url,
