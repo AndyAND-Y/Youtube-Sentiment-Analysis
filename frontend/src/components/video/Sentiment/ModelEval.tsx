@@ -5,7 +5,7 @@ import ModelData from "@/types/ModelData";
 import { useState } from "react";
 import Modal from "@/components/Modal";
 
-interface ModelPartProps {
+interface ModelEvalProps {
     modelData: ModelData
 }
 
@@ -17,7 +17,7 @@ function QuestionMarkIcon() {
     )
 }
 
-export default function ModelPart({ modelData }: ModelPartProps) {
+export default function ModelEval({ modelData }: ModelEvalProps) {
 
     const [showModel, setShowModel] = useState(false);
 

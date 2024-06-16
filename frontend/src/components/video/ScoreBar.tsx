@@ -8,6 +8,8 @@ interface ScoreBarProps {
 
 const ScoreBar: React.FC<ScoreBarProps> = ({ averageScore }) => {
 
+    const displacementProcent = (averageScore + 1) / 2 * 100;
+
     return (
         <div className="relative pb-12">
             <div className="w-full p-2 sm:h-12 h-8 rounded-full bg-gradient-to-r from-red-500 from-30% via-transparent to-70% to-green-500"></div>
@@ -18,7 +20,7 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ averageScore }) => {
                 }}
 
                 whileInView={{
-                    left: String((averageScore + 1) / 2 * 100) + "%"
+                    left: String(displacementProcent < 2 ? 2 : (displacementProcent > 98 ? 98 : displacementProcent)) + "%"
                 }}
 
                 viewport={{ once: true }}

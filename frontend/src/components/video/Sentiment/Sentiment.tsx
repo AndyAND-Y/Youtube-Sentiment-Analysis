@@ -1,5 +1,5 @@
 import getBaseApiLink from "@/util/getBaseApiLink"
-import ModelPart from "./ModelPart"
+import ModelEval from "./ModelEval"
 import ModelData from "@/types/ModelData"
 import formatCommentObject from "@/util/formatCommentObject"
 
@@ -14,7 +14,7 @@ export default async function Sentiment({ videoId, model }: VideoSentimentProps)
 
         const response = await fetch(getBaseApiLink() + videoId + "/" + model, {
             next: {
-                revalidate: 10
+                revalidate: 3600
             }
         })
             .then((res) => res.json())
@@ -34,7 +34,7 @@ export default async function Sentiment({ videoId, model }: VideoSentimentProps)
     modelData.description = [model]
 
     return (
-        <ModelPart modelData={modelData} />
+        <ModelEval modelData={modelData} />
     )
 
 

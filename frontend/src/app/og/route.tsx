@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     }
 
     const getScore = async () => {
-        const response = await fetch(getBaseApiLink() + videoId + "/sentiment", {
+        const response = await fetch(getBaseApiLink() + videoId + "/vader", {
             next: {
                 revalidate: 3600
             }
@@ -29,7 +29,7 @@ export async function GET(request: Request) {
             return null;
         }
 
-        const score = response.vader.average_score.toFixed(2);
+        const score = response.average_score.toFixed(2);
         return score;
     }
 
