@@ -3,15 +3,18 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "start:frontend": "npm --prefix ./frontend run dev",
+        "start:frontend:dev": "npm --prefix ./frontend run dev",
+        "start:frontend": "npm --prefix ./frontend run build && npm --prefix ./frontend run start",
         "start:backend": "python3 ./backend/manage.py runserver",
         "start:backend:win": "python ./backend/manage.py runserver",
-        "start": "concurrently --kill-others \"npm run start:frontend\" \"npm run start:backend\" ",
-        "start:win": "concurrently --kill-others \"npm run start:frontend\" \"npm run start:backend:win\" "
+        "start:dev": "concurrently --kill-others \"npm run start:frontend:dev\" \"npm run start:backend\" ",
+        "start:dev:win": "concurrently --kill-others \"npm run start:frontend\" \"npm run start:backend:win\" ",
+        "start:build": "concurrently --kill-others \"npm run start:frontend\" \"npm run start:backend\" "
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "concurrently": "^8.2.2"
-    }
+    },
+    "type": "module"
 }

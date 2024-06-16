@@ -8,6 +8,8 @@ interface VideoSentimentProps {
     model: string,
 }
 
+export const maxDuration = 59;
+
 export default async function Sentiment({ videoId, model }: VideoSentimentProps) {
 
     const fetchVideoSentiment = async (): Promise<ModelData> => {
