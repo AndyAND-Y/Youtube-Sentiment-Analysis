@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useRouter, usePathname, useSearchParams, redirect } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { extractYouTubeVideoId } from '@/util/extractYtbId';
 
 function SearchIcon() {
@@ -17,46 +17,34 @@ const SearchInput = () => {
 
     const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
 
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const createQueryString = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams.toString())
-            params.set(name, value)
-            return params.toString()
-        }, [searchParams]
-    )
-
     const changeSeachParams = useCallback(
         () => {
-            const searchTerm = inputRef.current?.value;
+            const videoIdTerm = inputRef.current?.value;
 
-            if (!searchTerm) {
+            if (!videoIdTerm) {
                 setErrorMessage("No input! Inset a valid youtube link!");
                 // router.replace(pathname)
                 return
             }
 
-            const value = extractYouTubeVideoId(searchTerm);
+            const videoId = extractYouTubeVideoId(videoIdTerm);
 
-            if (!value) {
+            if (!videoId) {
                 setErrorMessage("Not a valid youtube video link!")
                 // router.replace(pathname)
                 return
             }
 
             setErrorMessage(null);
-            router.replace(pathname)
-            router.refresh();
-            router.replace(pathname + '?' + createQueryString('v', value))
-            router.refresh();
-            // redirect(pathname + '?' + createQueryString('v', value))
+            router.replace(pathname.split('/')[0] + '/' + videoId)
+            router.refresh()
 
-        }, [createQueryString, pathname, router]
+        }, [pathname, router]
     )
 
     const handleKeyPress = useCallback(

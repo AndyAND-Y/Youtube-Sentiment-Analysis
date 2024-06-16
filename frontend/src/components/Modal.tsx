@@ -35,7 +35,7 @@ export default function Modal({ open, onClose, title, description }: ModalProps)
                         <p className="text-3xl font-bold">{title}</p>
                         <button
                             onClick={onClose}
-                            className="hover:scale-125 transition-all duration-150"
+                            className={`hover:scale-125 transition-all duration-150 ${open ? " " : ' hidden '}`}
                         >
                             <CloseIcon />
                         </button>

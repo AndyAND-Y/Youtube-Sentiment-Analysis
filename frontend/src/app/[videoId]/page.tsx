@@ -1,4 +1,31 @@
+import { Metadata } from "next"
+
+type VideoPageProps = {
+    params: { videoId: string }
+}
+
+export async function generateMetadata(
+    { params }: VideoPageProps,
+): Promise<Metadata> {
+
+    const { videoId } = params;
+
+    return {
+        title: "Youtube Comments Sentiment",
+        description: "Check how people feel about a youtube video!",
+        openGraph: {
+            title: "Youtube Comments Sentiment",
+            description: "Check how people feel about a youtube video!",
+            siteName: "Youtube Comments Sentiment Analysis",
+            type: "website",
+            images: [{ url: "https://ytb-sentiment-analysis.vercel.app/og/?v=" + videoId }]
+        }
+    }
+}
+
 import SearchInput from "@/components/Input";
+import { Suspense } from "react";
+import Video from "@/components/video/Video";
 
 function YoutubeIcon() {
     return <svg className="fill-[#FF0000] h-10 w-10 sm:h-12 sm:w-12 bg-white rounded-full p-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 572 512">
@@ -6,7 +33,9 @@ function YoutubeIcon() {
     </svg>
 }
 
-export default async function Home() {
+export default async function VideoPage({ params }: VideoPageProps) {
+
+    const { videoId } = params;
 
     return (
         <main className="flex flex-col items-center justify-center pb-12 h-full min-h-screen">
@@ -14,6 +43,11 @@ export default async function Home() {
                 <h1 className="lg:text-4xl md:text-2xl sm:text-xl text-lg text-white font-semibold text-center flex items-center gap-2"><div className=""><YoutubeIcon /></div> Comment Section Sentiment Analysis</h1>
                 <SearchInput />
             </div>
+            {
+                !!videoId &&
+                <Video videoId={videoId} />
+            }
+
         </main >
     );
 }
